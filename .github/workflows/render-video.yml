@@ -16,6 +16,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./template
 
       - name: Render video
-        run: npx remotion render src/index.tsx CodingEvolution out/video.mp4 --codec h264 --quality 80 --overwrite
+        run: npx remotion render src/Root.tsx CodingEvolution out/video.mp4 --codec h264 --quality 80 --overwrite
+        working-directory: ./template
