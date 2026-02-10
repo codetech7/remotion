@@ -14,10 +14,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
       - name: Install dependencies
         run: npm install
         working-directory: ./template
 
       - name: Render video
-        run: npx remotion render src/Root.tsx CodingEvolution out/video.mp4 --codec h264 --quality 80 --overwrite
+        run: npx remotion render src/index.ts CodingEvolution out/video.mp4 --codec h264 --jpeg-quality 80 --overwrite
         working-directory: ./template
+
+      - name: Upload video artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: rendered-video
+          path: template/out/video.mp4
