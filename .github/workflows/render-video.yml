@@ -1,3 +1,5 @@
+# Remotion Video Render Command
+
 name: Render Video
 
 on:
@@ -8,30 +10,14 @@ on:
 jobs:
   render:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout the code
-        uses: actions/checkout@v4
-
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v2
         with:
-          node-version: '20'
-
+          node-version: '16'
       - name: Install dependencies
         run: npm install
-
       - name: Render video
-        run: npx remotion render src/Video.tsx Video out/video.mp4
-
-      - name: Upload Video as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: rendered-video
-          path: out/video.mp4
-          retention-days: 30
-
-      - name: Notify completion
-        run: echo "Video rendered successfully. You can download it [here](https://github.com/codetech7/remotion/actions/artifacts)."
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run build && npm run render -- --entry=./src/index.jsx --composition=CodingEvolution
