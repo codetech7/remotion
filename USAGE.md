@@ -21,10 +21,10 @@ If you prefer to set up the project manually, you can clone this repository and 
 
 ```bash
 # Clone the repository
-git clone https://github.com/codetech7/remotion.git
+git clone https://github.com/remotion-dev/skills.git
 
 # Copy the template to your project directory
-cp -r remotion/template/* your-project-directory/
+cp -r skills/template/* your-project-directory/
 
 # Navigate to your project
 cd your-project-directory
