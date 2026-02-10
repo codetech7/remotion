@@ -111,11 +111,27 @@ This will open the Remotion Studio in your browser where you can:
 - Scrub through the timeline
 - Export the video
 
-### Build Video (requires @remotion/cli)
+### Render the Video
+The video composition can be rendered using the Remotion CLI:
+
 ```bash
-npm install @remotion/cli
-npm run build CodingEvolution --output=output.mp4
+npx remotion render src/Root.tsx CodingEvolution out/video.mp4
 ```
+
+This will:
+1. Bundle the React code
+2. Launch a headless browser
+3. Render all 450 frames (15 seconds × 30 fps)
+4. Encode the frames into an MP4 video
+5. Save the output to `out/video.mp4`
+
+The rendering typically takes about 30-40 seconds on modern hardware.
+
+**Note**: The configuration in `remotion.config.ts` includes:
+- Chrome browser path for system Chrome
+- `chrome-for-testing` mode for compatibility with newer Chrome versions
+- JPEG image format for video frames
+- Output overwrite enabled
 
 ## Key Features
 
