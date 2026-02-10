@@ -29,6 +29,9 @@ export const AIPromptScene: React.FC = () => {
     extrapolateRight: "clamp",
   });
 
+  // Frame-based cursor blink (blinks every 15 frames = 0.5 seconds)
+  const cursorVisible = Math.floor(frame / 15) % 2 === 0;
+
   return (
     <AbsoluteFill
       style={{
@@ -112,14 +115,8 @@ export const AIPromptScene: React.FC = () => {
               }}
             >
               {displayedAiResponse}
-              {aiCharsToShow < aiResponse.length && (
-                <span
-                  style={{
-                    backgroundColor: "#ececec",
-                    marginLeft: "2px",
-                    animation: "blink 1s infinite",
-                  }}
-                >
+              {aiCharsToShow < aiResponse.length && cursorVisible && (
+                <span style={{ backgroundColor: "#ececec", marginLeft: "2px" }}>
                   &nbsp;
                 </span>
               )}
@@ -127,14 +124,6 @@ export const AIPromptScene: React.FC = () => {
           </div>
         )}
       </div>
-      <style>
-        {`
-          @keyframes blink {
-            0%, 49% { opacity: 1; }
-            50%, 100% { opacity: 0; }
-          }
-        `}
-      </style>
     </AbsoluteFill>
   );
 };

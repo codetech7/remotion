@@ -41,6 +41,9 @@ export const TerminalScene: React.FC = () => {
     extrapolateRight: "clamp",
   });
 
+  // Frame-based cursor blink (blinks every 15 frames = 0.5 seconds)
+  const cursorVisible = Math.floor(frame / 15) % 2 === 0;
+
   return (
     <AbsoluteFill
       style={{
@@ -70,26 +73,11 @@ export const TerminalScene: React.FC = () => {
         </div>
         <div style={{ color: "#ce9178" }}>
           {displayedCode}
-          {charsToShow < htmlCode.length && (
-            <span
-              style={{
-                backgroundColor: "#d4d4d4",
-                animation: "blink 1s infinite",
-              }}
-            >
-              &nbsp;
-            </span>
+          {charsToShow < htmlCode.length && cursorVisible && (
+            <span style={{ backgroundColor: "#d4d4d4" }}>&nbsp;</span>
           )}
         </div>
       </div>
-      <style>
-        {`
-          @keyframes blink {
-            0%, 49% { opacity: 1; }
-            50%, 100% { opacity: 0; }
-          }
-        `}
-      </style>
     </AbsoluteFill>
   );
 };
