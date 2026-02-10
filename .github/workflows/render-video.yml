@@ -1,4 +1,4 @@
-# Remotion Video Render Command
+# Render Video Workflow
 
 name: Render Video
 
@@ -13,11 +13,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
+
       - name: Install dependencies
         run: npm install
+
       - name: Render video
-        run: npm run build && npm run render -- --entry=./src/index.jsx --composition=CodingEvolution
+        run: npx remotion render src/index.tsx CodingEvolution out/video.mp4 --codec h264 --quality 80 --overwrite
