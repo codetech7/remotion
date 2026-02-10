@@ -2,13 +2,16 @@ import { Composition } from "remotion";
 import { MyComposition } from "./Composition";
 
 export const RemotionRoot: React.FC = () => {
+  const fps = 30;
+  const duration = fps * 15; // 15 seconds total
+
   return (
     <>
       <Composition
-        id="MyComposition"
+        id="CodingEvolution"
         component={MyComposition}
-        durationInFrames={150}
-        fps={30}
+        durationInFrames={duration}
+        fps={fps}
         width={1920}
         height={1080}
       />
