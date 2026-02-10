@@ -1,5 +1,3 @@
-# Render Video Workflow
-
 name: Render Video
 
 on:
@@ -12,7 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
       - name: Install dependencies
         run: npm install
@@ -21,3 +24,26 @@ jobs:
       - name: Render video
         run: npx remotion render src/Root.tsx CodingEvolution out/video.mp4 --codec h264 --quality 80 --overwrite
         working-directory: ./template
+
+      - name: Verify artifact exists
+        run: |
+          if [ -f out/video.mp4 ]; then
+            echo "✓ Video file created successfully"
+            ls -lh out/video.mp4
+          else
+            echo "✗ Video file not found!"
+            exit 1
+          fi
+        working-directory: ./template
+
+      - name: Upload rendered video as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rendered-video
+          path: template/out/video.mp4
+          retention-days: 30
+        if: success()
+
+      - name: Notify completion
+        run: echo "Video rendered successfully! Download it from GitHub Actions artifacts."
+        if: success()
